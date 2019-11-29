@@ -1,0 +1,43 @@
+import socket
+import threading
+import sys
+class Server:
+    sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    connections=[]
+    def _init_(self):
+        sock.blind(('0.0.0.0',10000))
+        sock.listen(1)
+    def handler(c,a):
+        while True:
+            data=c.recv(1024)
+            for connection in connections:
+                connection.send(data)
+            if not data:
+                break
+    def run(self):
+        while True:
+            c,a=self.sock.accept()
+            cThread=threading.Thread(target=self.handler,args=(c,a))
+            cThread.daemon=True
+            cTrhead.start()
+            self.connections.append(c)
+            print(self.connections)
+class Client:
+    sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    def sendMsg(self):
+        self.sock.send(bytes(input(""),'utf-8'))
+    def _init_(self,address):
+        self.sock.connect((address,10000))
+        iThread=threading.Thread(target=sendMsg)
+        iThread.daemon=True
+        iThread.start()
+        while True:
+            data=self.sock.recv(1024)
+            if not data:
+                break
+            print(data)
+if (len(sys.argv)
+    Client=Client(sys.argv[1])
+else:
+    server=Server()
+    server.run()
